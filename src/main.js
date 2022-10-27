@@ -1,3 +1,2 @@
 import Cookiebanner from './cookiebanner.svelte';
-
-customElements.define('cookie-banner', Cookiebanner);
+import Cookiepolicy from './cookiepolicy.svelte';
