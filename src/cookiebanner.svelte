@@ -3,16 +3,51 @@
 <script>
 	import Cookiepolicy from "./cookiepolicy.svelte";
 	import Cookiepreferences from "./cookiepreferences.svelte";
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
+	import { element } from "svelte/internal";
+
 	export let theme = "light";
+
 	let openpolicy = false;
 	let openpref = false;
+	let agreed = [];
+	let possibilities = 3;
 	let rootElement;
 
 	onMount(async () => {
+		parseInput();
 		await loadStyle(rootElement, `global.css`);
+		rootElement.addEventListener("newsetting", handleSelection);
 	});
 
+	onDestroy(async () => {
+		rootElement.removeEventListener("newsetting");
+	});
+
+	//HANDLING INPUT
+	export let agreedcookie;
+	function parseInput() {
+		if (agreedcookie) {
+			let agreedstring = agreedcookie
+				.split(",")
+				.map((item) => item.trim());
+			agreedstring.forEach((element) => {
+				agreed.push(element == "true" ? true : false);
+			});
+		}
+		if (agreed.length < possibilities) {
+			for (let i = 0; i < possibilities - (agreed.length-i); i++){
+				agreed.push(false);
+			}
+		}
+	}
+
+	const handleSelection = (e) => {
+		agreed[e.detail.element] = !agreed[e.detail.element];
+		agreed = agreed;
+	};
+
+	//STYLE FROM GLOBAL CSS FILE
 	const loadStyle = (root, path) => {
 		return new Promise((resolve, reject) => {
 			try {
@@ -33,6 +68,8 @@
 	function openPolicy() {
 		openpolicy = true;
 	}
+
+	$: console.log(agreed);
 </script>
 
 <svelte:head>
@@ -85,7 +122,7 @@
 							Gestisci le preferenze
 						</div>
 					{:else}
-						<div id="empty"></div>
+						<div id="empty" />
 					{/if}
 					<div id="buttoncontainer">
 						<div
@@ -93,16 +130,31 @@
 							class:rifiutal={theme == "light"}
 							class:rifiutad={theme == "dark"}
 							id="rifiuta"
+							on:keydown
+							on:click={() => {
+								agreed.forEach(
+									(el, index) => (agreed[index] = false)
+								);
+							}}
 						>
 							Rifiuta tutti i cookies
 						</div>
-						<div class="button cursorp" id="accetta">
+						<div
+							class="button cursorp"
+							id="accetta"
+							on:keydown
+							on:click={() => {
+								agreed.forEach(
+									(el, index) => (agreed[index] = true)
+								);
+							}}
+						>
 							Accetta tutti i cookies
 						</div>
 					</div>
 				</div>
 				{#if openpref}
-					<Cookiepreferences bind:openpref={openpref}/>
+					<Cookiepreferences bind:openpref {agreed} />
 				{/if}
 			</div>
 		</div>
