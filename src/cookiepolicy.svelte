@@ -17,8 +17,8 @@
 <div id="fullpage">
     <div id="policy">
         <div id="containerpolicy">
-            <div id="title">Cookie Policy</div>
-            <div id="text">
+            <div class="maintitle">Cookie Policy</div>
+            <div class="maintext">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa
                 quisque dictumst nisl volutpat. Aenean dolor eget netus non,
                 imperdiet et, elementum tincidunt integer. Mauris vulputate in
@@ -48,11 +48,11 @@
                 felis feugiat purus tincidunt quam sed nibh.
             </div>
             {#each titles as title, i}
-                <div class="titleparagrafo">{title}</div>
-                <div class="bodyparagrafo">{bodies[i]}</div>
+                <div class="secondaryt">{title}</div>
+                <div class="secondaryb">{bodies[i]}</div>
             {/each}
-            <div class="bbottomcontainer">
-                <div class="closebutton" on:click={()=>{openpolicy=false}}>Chiudi</div>
+            <div class="bottomcontainerpolicy">
+                <div class="closebutton" on:keydown on:click={()=>{openpolicy=false}}>Chiudi</div>
             </div>
         </div>
     </div>
