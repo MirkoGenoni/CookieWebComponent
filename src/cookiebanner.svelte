@@ -4,18 +4,26 @@
 	import Cookiepolicy from "./cookiepolicy.svelte";
 	import Cookiepreferences from "./cookiepreferences.svelte";
 	import { onDestroy, onMount } from "svelte";
-	import { element } from "svelte/internal";
 
 	export let theme = "light";
 
+	//Handle the page modals
 	let openpolicy = false;
 	let openpref = false;
-	let agreed = [];
-	let possibilities = 3;
+
+	//Bind for main element 
 	let rootElement;
+
+	let agreed = []; //Initial agreed cookie preferences
+	let possibilities = 3; //Cookie preferences sections number
+	let blocked = [false, false, false]; // Cookie preferences blocked on true
+	let closebanner = false; //Display of the close cross on cookie banner
 
 	onMount(async () => {
 		parseInput();
+		blocked.forEach((curr, index) => {
+			if (curr) agreed[index] = true;
+		});
 		await loadStyle(rootElement, `global.css`);
 		rootElement.addEventListener("newsetting", handleSelection);
 	});
@@ -36,15 +44,22 @@
 			});
 		}
 		if (agreed.length < possibilities) {
-			for (let i = 0; i < possibilities - (agreed.length-i); i++){
+			for (let i = 0; i < possibilities - (agreed.length - i); i++) {
 				agreed.push(false);
 			}
 		}
 	}
 
 	const handleSelection = (e) => {
-		agreed[e.detail.element] = !agreed[e.detail.element];
+		if (!blocked[e.detail.element])
+			agreed[e.detail.element] = !agreed[e.detail.element];
 		agreed = agreed;
+	};
+
+	const handleAllSelections = (type) => {
+		agreed.forEach((el, index) => {
+			if (!blocked[index]) agreed[index] = type;
+		});
 	};
 
 	//STYLE FROM GLOBAL CSS FILE
@@ -96,9 +111,31 @@
 				class:darkbcontainer={theme == "dark"}
 				class:lightbcontainer={theme == "light"}
 			>
-				<div class="fs24" class:darktitle={theme == "dark"}>
+				<div
+					class="fs24"
+					class:darktitle={theme == "dark"}
+					class:titleclose={closebanner && !openpref}
+				>
 					Noi teniamo alla tua Privacy
+					{#if closebanner && !openpref}
+						<div class="closebanner">
+							<svg
+								width="20"
+								height="20"
+								viewBox="0 0 20 20"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								class="cursor-p"
+							>
+								<path
+									d="M19.3337 2.54602L17.4537 0.666016L10.0003 8.11935L2.54699 0.666016L0.666992 2.54602L8.12033 9.99935L0.666992 17.4527L2.54699 19.3327L10.0003 11.8793L17.4537 19.3327L19.3337 17.4527L11.8803 9.99935L19.3337 2.54602Z"
+									fill="#2D3648"
+								/>
+							</svg>
+						</div>
+					{/if}
 				</div>
+
 				<div id="body" class="fs16">
 					Facendo clic su "Accetta tutti i cookie", accetti la
 					memorizzazione dei cookie sul tuo dispositivo per migliorare
@@ -132,9 +169,7 @@
 							id="rifiuta"
 							on:keydown
 							on:click={() => {
-								agreed.forEach(
-									(el, index) => (agreed[index] = false)
-								);
+								handleAllSelections(false);
 							}}
 						>
 							Rifiuta tutti i cookies
@@ -144,9 +179,7 @@
 							id="accetta"
 							on:keydown
 							on:click={() => {
-								agreed.forEach(
-									(el, index) => (agreed[index] = true)
-								);
+								handleAllSelections(true);
 							}}
 						>
 							Accetta tutti i cookies
@@ -154,7 +187,7 @@
 					</div>
 				</div>
 				{#if openpref}
-					<Cookiepreferences bind:openpref {agreed} />
+					<Cookiepreferences bind:openpref {agreed} {blocked} {theme}/>
 				{/if}
 			</div>
 		</div>
@@ -188,7 +221,7 @@
 		box-sizing: border-box;
 		display: flex;
 		position: fixed;
-		width: 63rem;
+		width: 63.375rem;
 		bottom: 0;
 		flex-direction: column;
 		font-style: normal;
@@ -257,5 +290,9 @@
 	}
 	.cursorp {
 		cursor: pointer;
+	}
+	.titleclose {
+		display: flex;
+		justify-content: space-between;
 	}
 </style>
