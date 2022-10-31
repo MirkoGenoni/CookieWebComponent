@@ -5,6 +5,9 @@
 	import Cookiepreferences from "./cookiepreferences.svelte";
 	import { onDestroy, onMount } from "svelte";
 
+	//file that will be received from backend
+	import { settings } from "./settings.svelte"
+
 	export let theme = "light";
 
 	//Handle the page modals
@@ -14,13 +17,11 @@
 	//Bind for main element
 	let rootElement;
 
-	let agreed = []; //Initial agreed cookie preferences
-	let possibilities = 3; //Cookie preferences sections number
-	let blocked = [false, false, false]; // Cookie preferences blocked on true
-	let closebanner = true; //Display of the close cross on cookie banner
+	let agreed = settings.agreed; //Initial agreed cookie preferences
+	let blocked = settings.blocked; // Cookie preferences blocked on true
+	let closebanner = settings.closebanner; //Display of the close cross on cookie banner
 
 	onMount(async () => {
-		parseInput();
 		blocked.forEach((curr, index) => {
 			if (curr) agreed[index] = true;
 		});
@@ -32,8 +33,8 @@
 		rootElement.removeEventListener("newsetting");
 	});
 
-	//HANDLING INPUT
-	export let agreedcookie;
+	//OLD HANDLING INPUT STRING FROM HTML TAG
+	/*export let agreedcookie;
 	function parseInput() {
 		if (agreedcookie) {
 			let agreedstring = agreedcookie
@@ -48,7 +49,7 @@
 				agreed.push(false);
 			}
 		}
-	}
+	}*/
 
 	const handleSelection = (e) => {
 		if (!blocked[e.detail.element])

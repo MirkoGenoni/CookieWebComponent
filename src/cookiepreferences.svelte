@@ -1,18 +1,14 @@
 <svelte:options tag={"cookie-preferences"} />
 
 <script>
+    import { settings } from "./settings.svelte";
     import Selection from "./selection.svelte";
 
-    const sectionsTitle = [
-        "Cookie e tecnologie necessarie",
-        "Personalizzazione del sito",
-        "Pubblicità personalizzata",
-    ];
-    const sectionsBodies = [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt quam sed nibh.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt quam sed nibh.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt quam sed nibh.",
-    ];
+    const mainTitle = settings.preferences_main_title;
+    const mainBody = settings.preferences_main_body;
+    const sectionsTitle = settings.preferences_sections_titles;
+    const sectionsBodies = settings.preferences_sections_bodies;
+
     export let openpref;
     export let opensection = new Array(sectionsBodies.length).fill(false);
     export let agreed = [];
@@ -28,13 +24,10 @@
     style="margin-top: 2rem"
     class:darktitle={theme == "dark"}
 >
-    Gestisci preferenze
+    {mainTitle}
 </div>
 <div class="maintext">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque
-    dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum
-    tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu.
-    Habitant felis feugiat purus tincidunt quam sed nibh.
+    {mainBody}
 </div>
 {#each sectionsTitle as title, i}
     <Selection

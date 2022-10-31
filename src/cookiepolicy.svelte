@@ -1,18 +1,15 @@
 <svelte:options tag={"cookie-policy"} />
 
 <script>
+    import { settings } from "./settings.svelte";
+
     export let openpolicy;
     export let theme;
-    const titles = [
-        "Lorem ipsum dolor sit amet",
-        "Lorem ipsum dolor sit amet",
-        "Lorem ipsum dolor sit amet",
-    ];
-    const bodies = [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt quam sed nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt quam sed nibh.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt quam sed nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt quam sed nibh.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt quam sed nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean dolor eget netus non, imperdiet et, elementum tincidunt integer. Mauris vulputate in magna suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt quam sed nibh.",
-    ];
+
+    const maintitle = settings.policy_main_title;
+    const mainbody = settings.policy_main_body;
+    const titles = settings.policy_titles;
+    const bodies = settings.policy_bodies;
 </script>
 
 <div id="fullpage">
@@ -23,37 +20,9 @@
     >
         <div id="containerpolicy">
             <div class="maintitle" class:darktitle={theme == "dark"}>
-                Cookie Policy
+                {maintitle}
             </div>
-            <div class="maintext">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa
-                quisque dictumst nisl volutpat. Aenean dolor eget netus non,
-                imperdiet et, elementum tincidunt integer. Mauris vulputate in
-                magna suspendisse pulvinar eu. Habitant felis feugiat purus
-                tincidunt quam sed nibh. Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean
-                dolor eget netus non, imperdiet et, elementum tincidunt integer.
-                Mauris vulputate in magna suspendisse pulvinar eu. Habitant
-                felis feugiat purus tincidunt quam sed nibh. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Massa quisque dictumst
-                nisl volutpat. Aenean dolor eget netus non, imperdiet et,
-                elementum tincidunt integer. Mauris vulputate in magna
-                suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt
-                quam sed nibh. Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean
-                dolor eget netus non, imperdiet et, elementum tincidunt integer.
-                Mauris vulputate in magna suspendisse pulvinar eu. Habitant
-                felis feugiat purus tincidunt quam sed nibh.Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Massa quisque dictumst
-                nisl volutpat. Aenean dolor eget netus non, imperdiet et,
-                elementum tincidunt integer. Mauris vulputate in magna
-                suspendisse pulvinar eu. Habitant felis feugiat purus tincidunt
-                quam sed nibh. Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Massa quisque dictumst nisl volutpat. Aenean
-                dolor eget netus non, imperdiet et, elementum tincidunt integer.
-                Mauris vulputate in magna suspendisse pulvinar eu. Habitant
-                felis feugiat purus tincidunt quam sed nibh.
-            </div>
+            <div class="maintext">{mainbody}</div>
             {#each titles as title, i}
                 <div class="secondaryt" class:darktitle={theme == "dark"}>
                     {title}
