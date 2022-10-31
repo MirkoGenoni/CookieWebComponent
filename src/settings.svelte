@@ -31,5 +31,6 @@
         "agreed": [true, true, true],
         "blocked": [false, false, false],
         "closebanner": false,
+        "position" : "bottomleft"
     };
 </script>

@@ -6,7 +6,7 @@
 	import { onDestroy, onMount } from "svelte";
 
 	//file that will be received from backend
-	import { settings } from "./settings.svelte"
+	import { settings } from "./settings.svelte";
 
 	export let theme = "light";
 
@@ -106,7 +106,7 @@
 		<Cookiepolicy bind:openpolicy {theme} />
 	{:else}
 		<div
-			class="bannercontainer globprop"
+			class={"bannercontainer globprop " + settings.position}
 			class:darkcontainer={theme == "dark"}
 			class:lightcontainer={theme == "light"}
 		>
@@ -208,15 +208,20 @@
 	}
 
 	.bannercontainer {
-		width: 63.375rem;
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		position: fixed;
-		bottom: 0;
 		padding: 1.5rem;
-		margin: 0 calc((100% - 64.375rem)/2);
+		max-height: 33.5rem;
+		overflow: auto;
 	}
+
+	/* .fullbottombanner{
+		width: 63.375rem;
+		bottom: 0;		
+		margin: 0 calc((100% - 64.375rem)/2);
+	} */
 
 	.body {
 		margin-top: 0.5rem;
@@ -239,7 +244,7 @@
 		color: #5265cc;
 		text-decoration: underline;
 	}
-	
+
 	.titleclose {
 		display: flex;
 		justify-content: space-between;

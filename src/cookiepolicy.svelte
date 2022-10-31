@@ -12,33 +12,31 @@
     const bodies = settings.policy_bodies;
 </script>
 
-<div id="fullpage">
-    <div
-        id="policy"
-        class:darkcontainer={theme == "dark"}
-        class:lightcontainer={theme == "light"}
-    >
-        <div id="containerpolicy">
-            <div class="maintitle" class:darktitle={theme == "dark"}>
-                {maintitle}
+<div
+    id="policy"
+    class:darkcontainer={theme == "dark"}
+    class:lightcontainer={theme == "light"}
+>
+    <div id="containerpolicy">
+        <div class="maintitle" class:darktitle={theme == "dark"}>
+            {maintitle}
+        </div>
+        <div class="maintext">{mainbody}</div>
+        {#each titles as title, i}
+            <div class="secondaryt" class:darktitle={theme == "dark"}>
+                {title}
             </div>
-            <div class="maintext">{mainbody}</div>
-            {#each titles as title, i}
-                <div class="secondaryt" class:darktitle={theme == "dark"}>
-                    {title}
-                </div>
-                <div class="secondaryb">{bodies[i]}</div>
-            {/each}
-            <div class="bottomcontainerpolicy">
-                <div
-                    class="closebutton"
-                    on:keydown
-                    on:click={() => {
-                        openpolicy = false;
-                    }}
-                >
-                    Chiudi
-                </div>
+            <div class="secondaryb">{bodies[i]}</div>
+        {/each}
+        <div class="bottomcontainerpolicy">
+            <div
+                class="closebutton"
+                on:keydown
+                on:click={() => {
+                    openpolicy = false;
+                }}
+            >
+                Chiudi
             </div>
         </div>
     </div>
