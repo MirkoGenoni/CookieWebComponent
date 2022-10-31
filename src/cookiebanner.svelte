@@ -11,13 +11,13 @@
 	let openpolicy = false;
 	let openpref = false;
 
-	//Bind for main element 
+	//Bind for main element
 	let rootElement;
 
 	let agreed = []; //Initial agreed cookie preferences
 	let possibilities = 3; //Cookie preferences sections number
 	let blocked = [false, false, false]; // Cookie preferences blocked on true
-	let closebanner = false; //Display of the close cross on cookie banner
+	let closebanner = true; //Display of the close cross on cookie banner
 
 	onMount(async () => {
 		parseInput();
@@ -102,94 +102,90 @@
 
 <main bind:this={rootElement}>
 	{#if openpolicy == true}
-		<Cookiepolicy bind:openpolicy />
+		<Cookiepolicy bind:openpolicy {theme} />
 	{:else}
-		<div id="container">
+		<div
+			class="bannercontainer globprop"
+			class:darkcontainer={theme == "dark"}
+			class:lightcontainer={theme == "light"}
+		>
 			<div
-				id="bannerContainer"
-				class="globprop"
-				class:darkbcontainer={theme == "dark"}
-				class:lightbcontainer={theme == "light"}
+				class="fs24 noselection"
+				class:darktitle={theme == "dark"}
+				class:titleclose={closebanner && !openpref}
 			>
-				<div
-					class="fs24"
-					class:darktitle={theme == "dark"}
-					class:titleclose={closebanner && !openpref}
-				>
-					Noi teniamo alla tua Privacy
-					{#if closebanner && !openpref}
-						<div class="closebanner">
-							<svg
-								width="20"
-								height="20"
-								viewBox="0 0 20 20"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-								class="cursor-p"
-							>
-								<path
-									d="M19.3337 2.54602L17.4537 0.666016L10.0003 8.11935L2.54699 0.666016L0.666992 2.54602L8.12033 9.99935L0.666992 17.4527L2.54699 19.3327L10.0003 11.8793L17.4537 19.3327L19.3337 17.4527L11.8803 9.99935L19.3337 2.54602Z"
-									fill="#2D3648"
-								/>
-							</svg>
-						</div>
-					{/if}
-				</div>
-
-				<div id="body" class="fs16">
-					Facendo clic su "Accetta tutti i cookie", accetti la
-					memorizzazione dei cookie sul tuo dispositivo per migliorare
-					la navigazione del sito, analizzare l'utilizzo del sito e
-					assistere nelle nostre attività di marketing, come
-					specificato nella <a
-						class="cursorp"
-						on:click|preventDefault={openPolicy}
-						href={undefined}>Cookie Policy</a
-					>.
-				</div>
-				<div id="bottomcontainer" class="lsmin">
-					{#if !openpref}
-						<div
-							class="button underline cursorp"
-							on:keydown
-							on:click={() => {
-								openpref = true;
-							}}
+				Noi teniamo alla tua Privacy
+				{#if closebanner && !openpref}
+					<div class="closebanner">
+						<svg
+							width="20"
+							height="20"
+							viewBox="0 0 20 20"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							class="cursor-p"
 						>
-							Gestisci le preferenze
-						</div>
-					{:else}
-						<div id="empty" />
-					{/if}
-					<div id="buttoncontainer">
-						<div
-							class="button cursorp"
-							class:rifiutal={theme == "light"}
-							class:rifiutad={theme == "dark"}
-							id="rifiuta"
-							on:keydown
-							on:click={() => {
-								handleAllSelections(false);
-							}}
-						>
-							Rifiuta tutti i cookies
-						</div>
-						<div
-							class="button cursorp"
-							id="accetta"
-							on:keydown
-							on:click={() => {
-								handleAllSelections(true);
-							}}
-						>
-							Accetta tutti i cookies
-						</div>
+							<path
+								d="M19.3337 2.54602L17.4537 0.666016L10.0003 8.11935L2.54699 0.666016L0.666992 2.54602L8.12033 9.99935L0.666992 17.4527L2.54699 19.3327L10.0003 11.8793L17.4537 19.3327L19.3337 17.4527L11.8803 9.99935L19.3337 2.54602Z"
+								fill={theme == "light" ? "#2D3648" : "#E1F4FF"}
+							/>
+						</svg>
 					</div>
-				</div>
-				{#if openpref}
-					<Cookiepreferences bind:openpref {agreed} {blocked} {theme}/>
 				{/if}
 			</div>
+
+			<div class="body noselection">
+				Facendo clic su "Accetta tutti i cookie", accetti la
+				memorizzazione dei cookie sul tuo dispositivo per migliorare la
+				navigazione del sito, analizzare l'utilizzo del sito e assistere
+				nelle nostre attività di marketing, come specificato nella <a
+					class="cursor-p"
+					on:click|preventDefault={openPolicy}
+					href={undefined}>Cookie Policy</a
+				>.
+			</div>
+			<div class="bottomcontainer lsmin">
+				{#if !openpref}
+					<div
+						class="noborderbutton cursor-p"
+						on:keydown
+						on:click={() => {
+							openpref = true;
+						}}
+					>
+						Gestisci le preferenze
+					</div>
+				{:else}
+					<div id="empty" />
+				{/if}
+				<div class="displayflex">
+					<div
+						class="closebutton cursor-p"
+						class:lightbutton={theme == "light"}
+						class:darkbutton={theme == "dark"}
+						id="rifiuta"
+						on:keydown
+						on:click={() => {
+							handleAllSelections(false);
+						}}
+					>
+						Rifiuta tutti i cookies
+					</div>
+					<div
+						class="closebutton cursor-p"
+						style="margin-left: 1rem;"
+						on:keydown
+						on:click={() => {
+							handleAllSelections(true);
+						}}
+					>
+						Accetta tutti i cookies
+					</div>
+				</div>
+			</div>
+			{#if openpref}
+				<Cookiepreferences bind:openpref {agreed} {blocked} {theme} />
+			{/if}
 		</div>
 	{/if}
 </main>
@@ -199,15 +195,7 @@
 		width: 100%;
 		height: 100%;
 	}
-	#container {
-		width: 100%;
-		height: 11.7rem;
-		display: flex;
-		justify-content: center;
-		position: fixed;
-		bottom: 0;
-		left: 0;
-	}
+
 	.globprop {
 		box-sizing: border-box;
 		font-family: "Inter";
@@ -217,80 +205,40 @@
 		letter-spacing: 0em;
 		text-align: left;
 	}
-	#bannerContainer {
+
+	.bannercontainer {
+		width: 63.375rem;
 		box-sizing: border-box;
 		display: flex;
-		position: fixed;
-		width: 63.375rem;
-		bottom: 0;
 		flex-direction: column;
-		font-style: normal;
-		font-weight: 700;
+		position: fixed;
+		bottom: 0;
 		padding: 1.5rem;
+		margin: 0 calc((100% - 64.375rem)/2);
 	}
-	.darkbcontainer {
-		background-color: #1a182d;
-		color: #ffffff;
-	}
-	.lightbcontainer {
-		background-color: #b9c4ff;
-		color: #2d3648;
-	}
-	.darktitle {
-		color: #e1f4ff;
-	}
-	.fs16 {
-		font-size: 16px;
-	}
-	.fs24 {
-		font-size: 24px;
-	}
-	#body {
+
+	.body {
 		margin-top: 0.5rem;
 		font-weight: 500;
+		font-size: 16px;
 	}
-	#bottomcontainer {
+
+	.bottomcontainer {
 		margin-top: 0.625rem;
-		height: 100%;
 		display: flex;
-		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
 	}
-	.rifiutal {
-		border: 2px solid #2d3648;
-	}
-	.rifiutad {
-		border: 2px solid #ffffff;
-	}
-	#accetta {
-		margin-left: 1rem;
-		background-color: #2d3648;
-		color: #ffffff;
-	}
-	#buttoncontainer {
-		display: flex;
-		flex-direction: row;
-	}
-	.underline {
-		text-decoration-line: underline;
-		font-feature-settings: "calt" off;
-	}
-	.button {
-		box-sizing: border-box;
-		padding: 0.75rem 1.25rem;
-		border-radius: 6px;
-	}
+
 	.lsmin {
 		letter-spacing: -0.01em;
 	}
+
 	a {
-		color: rgb(0, 100, 200);
+		color: #5265cc;
 		text-decoration: underline;
 	}
-	.cursorp {
-		cursor: pointer;
-	}
+	
 	.titleclose {
 		display: flex;
 		justify-content: space-between;
