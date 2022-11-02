@@ -93,7 +93,7 @@
 	$: console.log(agreed);
 
 	function topbottomargin(height){
-		if(settings.position=="center" && bannercontainer && height && innerWidth>812){
+		if(settings.position=="center" && height && innerWidth>812){
 			margin = "margin: calc((100vh - " + height + "px)/2) calc((100% - 60vw)/2)";
 		} else {
 			margin = "";
@@ -127,7 +127,6 @@
 			class:darkcontainer={theme == "dark"}
 			class:lightcontainer={theme == "light"}
 			bind:clientHeight={bannercontainerHeight}
-			bind:this={bannercontainer}
 			style = {settings.position=="center" ? margin : ""}
 		>
 			<div
