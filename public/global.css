@@ -56,6 +56,13 @@
 	max-height: calc(90vh - 2rem);
 }
 
+.center {
+	width: 60vw;
+	top: 0;
+	left: 0;
+	max-height: calc(90vh - 2rem);
+}
+
 .lightcontainer {
 	background-color: #b9c4ff;
 	color: #2d3648;
@@ -255,7 +262,32 @@
 	user-select: none;
 }
 
-@media screen and (max-width: 751px) {
+@media screen and (max-width: 812px) {
+	.fullbottom {
+		max-height: 90vh;
+	}
+
+	.topleft,
+	.topright {
+		width: fit-content;
+		right: 0;
+		left: 0;
+		top: 0;
+		max-height: 90vh;
+	}
+
+	.bottomleft,
+	.bottomright,
+	.center {
+		width: fit-content;
+		top: auto;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		max-height: 90vh;
+		margin: 0;
+	}
+
 	.bottomcontainer {
 		justify-content: center;
 	}
@@ -270,23 +302,13 @@
 		margin: calc((100vh - 70vh)/2) calc((100% - 90vw)/2);
 	}
 
-	.fullbottom {
-		max-height: 90vh;
+	.noborderbutton {
+		margin-top: 0.625rem;
 	}
+}
 
-	.topleft, .topright{
-		width: fit-content;
-		right: 0;
-		left: 0;
-		top: 0;
-		max-height: 90vh;
-	}
-
-	.bottomleft, .bottomright{
-		width: fit-content;
-		right: 0;
-		left: 0;
-		bottom: 0;
-		max-height: 90vh;
+@media screen and (max-width: 472px) {
+	.bottomcontainer {
+		flex-direction: column-reverse;
 	}
 }

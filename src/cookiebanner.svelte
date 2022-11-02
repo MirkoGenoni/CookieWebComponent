@@ -21,6 +21,11 @@
 	let blocked = settings.blocked; // Cookie preferences blocked on true
 	let closebanner = settings.closebanner; //Display of the close cross on cookie banner
 
+	let bannercontainerHeight;
+	let bannercontainer;
+	let margin;
+	let innerWidth;
+
 	onMount(async () => {
 		blocked.forEach((curr, index) => {
 			if (curr) agreed[index] = true;
@@ -86,6 +91,16 @@
 	}
 
 	$: console.log(agreed);
+
+	function topbottomargin(height){
+		if(settings.position=="center" && bannercontainer && height && innerWidth>812){
+			margin = "margin: calc((100vh - " + height + "px)/2) calc((100% - 60vw)/2)";
+		} else {
+			margin = "";
+		}
+	}
+
+	$: topbottomargin(bannercontainerHeight)
 </script>
 
 <svelte:head>
@@ -102,6 +117,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </svelte:head>
 
+<svelte:window bind:innerWidth></svelte:window>
 <main bind:this={rootElement}>
 	{#if openpolicy == true}
 		<Cookiepolicy bind:openpolicy {theme} />
@@ -110,6 +126,9 @@
 			class={"bannercontainer globprop " + settings.position}
 			class:darkcontainer={theme == "dark"}
 			class:lightcontainer={theme == "light"}
+			bind:clientHeight={bannercontainerHeight}
+			bind:this={bannercontainer}
+			style = {settings.position=="center" ? margin : ""}
 		>
 			<div
 				class="fs24 noselection"
