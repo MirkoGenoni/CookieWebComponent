@@ -99,6 +99,7 @@
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap"
 		rel="stylesheet"
 	/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </svelte:head>
 
 <main bind:this={rootElement}>
@@ -195,12 +196,13 @@
 	main {
 		width: 100%;
 		height: 100%;
+		text-size-adjust: none;
 	}
 
 	.globprop {
 		box-sizing: border-box;
 		font-family: "Inter";
-		font-size: 16px;
+		font-size: 1rem;
 		font-weight: 700;
 		line-height: 130%;
 		letter-spacing: 0em;
@@ -226,7 +228,7 @@
 	.body {
 		margin-top: 0.5rem;
 		font-weight: 500;
-		font-size: 16px;
+		font-size: 1rem;
 	}
 
 	.bottomcontainer {
