@@ -27,6 +27,22 @@
 	let innerWidth;
 
 	onMount(async () => {
+		//Get the current page
+		// const url = window.location.href;
+		// var xmlHttp = new XMLHttpRequest();
+		// xmlHttp.open("GET", url, false);
+		// xmlHttp.send(null);
+		//const page = String(xmlHttp.responseText);
+
+		//search for all occurrences of "http" in the page fetched
+		//let occurences = page.match(/http.+/g);
+		//search for all occurrences of "http" in current header
+		const page = document.head.innerHTML;
+		let occurrences = page.match(/http.+/g);
+
+		console.log(occurrences);
+		console.log(document.head);
+
 		blocked.forEach((curr, index) => {
 			if (curr) agreed[index] = true;
 		});
@@ -92,15 +108,18 @@
 
 	$: console.log(agreed);
 
-	function topbottomargin(height){
-		if(settings.position=="center" && height && innerWidth>812){
-			margin = "margin: calc((100vh - " + height + "px)/2) calc((100% - 60vw)/2)";
+	function topbottomargin(height) {
+		if (settings.position == "center" && height && innerWidth > 812) {
+			margin =
+				"margin: calc((100vh - " +
+				height +
+				"px)/2) calc((100% - 60vw)/2)";
 		} else {
 			margin = "";
 		}
 	}
 
-	$: topbottomargin(bannercontainerHeight)
+	$: topbottomargin(bannercontainerHeight);
 </script>
 
 <svelte:head>
@@ -114,10 +133,10 @@
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap"
 		rel="stylesheet"
 	/>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 </svelte:head>
 
-<svelte:window bind:innerWidth></svelte:window>
+<svelte:window bind:innerWidth />
 <main bind:this={rootElement}>
 	{#if openpolicy == true}
 		<Cookiepolicy bind:openpolicy {theme} />
@@ -127,7 +146,7 @@
 			class:darkcontainer={theme == "dark"}
 			class:lightcontainer={theme == "light"}
 			bind:clientHeight={bannercontainerHeight}
-			style = {settings.position=="center" ? margin : ""}
+			style={settings.position == "center" ? margin : ""}
 		>
 			<div
 				class="fs24 noselection"
@@ -197,6 +216,7 @@
 						on:keydown
 						on:click={() => {
 							handleAllSelections(true);
+							window.yett.unblock();
 						}}
 					>
 						Accetta tutti i cookies
