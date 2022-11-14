@@ -109,7 +109,7 @@
 	$: console.log(agreed);
 
 	function topbottomargin(height) {
-		if (settings.position == "center" && height && innerWidth > 812) {
+		if (settings.position == "center" && height && innerWidth > 875) {
 			margin =
 				"margin: calc((100vh - " +
 				height +

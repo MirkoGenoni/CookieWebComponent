@@ -222,12 +222,24 @@
 	justify-content: center;
 }
 
+.justifycontentend {
+	justify-content: flex-end;
+}
+
 .alignitrems-c {
 	align-items: center;
 }
 
 .mr-2375 {
 	margin-right: 2.375rem;
+}
+
+.mr10 {
+	margin-right: 10%;
+}
+
+.pr1 {
+	padding-right: 1rem;
 }
 
 .fs16 {
@@ -262,7 +274,11 @@
 	user-select: none;
 }
 
-@media screen and (max-width: 812px) {
+.w50 {
+	width: 50%;
+}
+
+@media screen and (max-width: 875px) {
 	.fullbottom {
 		max-height: 90vh;
 	}

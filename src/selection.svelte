@@ -20,11 +20,11 @@
 </script>
 
 <div class="titleselectioncontainer">
-    <div class="secondaryt mb0" class:darktitle={theme == "dark"}>{title}</div>
-    <div class="displayflex alignitems-c">
+    <div class="secondaryt mb0 mr2 w50 pr1" class:darktitle={theme == "dark"}>{title}</div>
+    <div class="displayflex alignitems-c w50 justifycontentend">
         {#if !blocked}
             <div
-                class="displayflex cursor-p mr-2375"
+                class="displayflex cursor-p mr10"
                 on:keydown
                 on:click={() => {
                     openbody = !openbody;
